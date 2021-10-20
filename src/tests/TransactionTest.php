@@ -47,7 +47,9 @@ class TransactionTest extends TestCase
         $table = Table::factory()->create();
         $item = Item::factory()->create();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'kasir'
+        ]);
 
         $this->actingAs($user)->json('POST', '/api/transactions', [
             'table_id' => $table->id,
@@ -157,7 +159,9 @@ class TransactionTest extends TestCase
             ],
         ];
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'kasir'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/transactions/' . $transaction->invoice, $update);
 
