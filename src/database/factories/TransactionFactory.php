@@ -13,13 +13,14 @@ class TransactionFactory extends Factory
     {
         $total = random_int(100000, 999999);;
         $pay = ($total + 10000);
+        $status = ['pending', 'success'];
         return [
             'user_id' => rand(1, 2),
             'table_id' => rand(1, 2),
             'total' => $total,
             'pay' => $pay,
             'change' => ($pay - $total),
-            'status' => array_rand(['pending', 'success']),
+            'status' => $status[array_rand($status)],
         ];
     }
 }
