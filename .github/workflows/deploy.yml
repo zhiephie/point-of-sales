@@ -1,0 +1,28 @@
+name: CI-CD # Nama Workflow
+
+on: push # Ini dijalankan ketika ada event push
+
+jobs:
+  test-php:
+    name: Test/Lint PHP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: 7.4 # Pilih versi php
+          extensions: mbstring, bcmath # Ektensi yang diperlukan dalam tahap test
+      - name: Install Composer dependencies
+          run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Prepare the application
+          run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Test with phpunit
+          run: vendor/bin/phpunit --coverage-text
+  # deploy:
+  #   name: Deploy to Production
+  #   runs-on: ubuntu-latest
+  #   needs: [test-php]
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #     # kode dimana logic deploy ke server
