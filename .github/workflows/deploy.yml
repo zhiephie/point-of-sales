@@ -6,6 +6,9 @@ jobs:
   test-php:
     name: Test/Lint PHP
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
     steps:
       - uses: actions/checkout@v1
       - name: Setup PHP
