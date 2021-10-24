@@ -17,11 +17,11 @@ jobs:
           php-version: 7.4 # Pilih versi php
           extensions: mbstring, bcmath # Ektensi yang diperlukan dalam tahap test
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: composer install
       - name: Prepare the application
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Test with phpunit
-        run: vendor/bin/phpunit --coverage-text
+        run: vendor/bin/phpunit
   # deploy:
   #   name: Deploy to Production
   #   runs-on: ubuntu-latest
