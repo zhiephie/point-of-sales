@@ -109,7 +109,7 @@ class CategoryTest extends TestCase
     /**
      * @test
      */
-    public function can_update_a_table()
+    public function can_update_a_category()
     {
         $category = Category::factory()->create();
 
