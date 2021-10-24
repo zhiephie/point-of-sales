@@ -134,11 +134,13 @@ class ItemTest extends TestCase
      */
     public function can_update_a_item(): void
     {
-        $item = Item::factory()->create();
         $category = Category::factory()->create();
+        $item = Item::factory()->create([
+            'category_id' => $category->id
+        ]);
 
         $newItem = [
-            'category_id' => $category->id,
+            'category_id' => $item->category_id,
             'barcode' => $item->barcode,
             'name'  => $item->name . '_updated',
             'description' =>  $item->description . '_updated',
