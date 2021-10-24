@@ -44,14 +44,18 @@ class ItemTest extends TestCase
      */
     public function can_create_a_item(): void
     {
-        $item = Item::factory()->make();
         $category = Category::factory()->create();
+        $item = Item::factory()->make([
+            'category_id' => $category->id
+        ]);
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)
             ->json('POST', '/api/items', [
-                'category_id' => $category->id,
+                'category_id' => $item->category_id,
                 'name' => $item->name,
                 'barcode' => $item->barcode,
                 'description' => $item->description,
@@ -143,7 +147,9 @@ class ItemTest extends TestCase
             'slug'  => Str::slug($item->name . '-updated'),
         ];
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/items/' . $item->id, $newItem);
 
@@ -161,7 +167,9 @@ class ItemTest extends TestCase
         $category = Category::factory()->create();
         // Given no item
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/items/999', [
             'category_id' => $category->id,
@@ -186,7 +194,9 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/items/' . $item->id);
 

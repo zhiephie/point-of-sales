@@ -46,7 +46,9 @@ class CategoryTest extends TestCase
     {
         $category = Category::factory()->make();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('POST', '/api/categories', [
             'name' => $category->name
@@ -116,7 +118,9 @@ class CategoryTest extends TestCase
             'slug'  => Str::slug($category->name . '-updated'),
         ];
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/categories/' .$category->id, $newCategory);
 
@@ -143,7 +147,9 @@ class CategoryTest extends TestCase
     {
         // Given no category
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/categories/999', [
             'name' => 'OK updated'
@@ -163,7 +169,9 @@ class CategoryTest extends TestCase
     {
         // Given
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/categories/999');
         // Then
@@ -181,7 +189,9 @@ class CategoryTest extends TestCase
         // Given
         $category = Category::factory()->create();
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/categories/' . $category->id);
         // Then

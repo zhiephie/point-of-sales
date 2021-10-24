@@ -14,7 +14,9 @@ class TableTest extends TestCase
         $table = Table::factory()->make();
         $name = $table->name;
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)
             ->json('POST', '/api/tables', [
@@ -91,7 +93,9 @@ class TableTest extends TestCase
     {
         // Given no table
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/tables/999', [
             'name' => 'OK updated'
@@ -120,7 +124,9 @@ class TableTest extends TestCase
             'slug'  => Str::slug($table->name . '_updated'),
         ];
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('PUT', '/api/tables/'. $table->id, $newTable);
 
@@ -150,7 +156,9 @@ class TableTest extends TestCase
     {
         // Given
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/tables/999');
         // Then
@@ -168,7 +176,9 @@ class TableTest extends TestCase
         // Given
         $table = Table::factory()->create();
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/tables/' . $table->id);
         // Then

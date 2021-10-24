@@ -14,14 +14,27 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
-          php-version: 7.4 # Pilih versi php
+          php-version: 8.0 # Pilih versi php
           extensions: mbstring, bcmath # Ektensi yang diperlukan dalam tahap test
       - name: Install Composer dependencies
         run: composer install
+        env:
+          APP_ENV: testing
       - name: Prepare the application
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Test with phpunit
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+      - name: Create Database
+        run: touch database/database.sqlite
+      - name: Test with PHPUnit
         run: vendor/bin/phpunit
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+          CACHE_DRIVER: array
+          SESSION_DRIVER: array
+          QUEUE_DRIVER: sync
   # deploy:
   #   name: Deploy to Production
   #   runs-on: ubuntu-latest
