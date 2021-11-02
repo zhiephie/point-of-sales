@@ -2,6 +2,7 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
+require 'recipe/rsync.php';
 
 // Project name
 set('application', 'point-of-sales');
