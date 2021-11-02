@@ -38,13 +38,6 @@ task('deploy:secrets', function () {
     upload('.env', get('deploy_path') . '/shared');
 });
 
-// Shared files/dirs between deploys
-add('shared_files', []);
-add('shared_dirs', []);
-
-// Writable dirs by web server
-add('writable_dirs', []);
-
 // Hosts
 host('pos.timexstudio.com') // Name of the server
     ->hostname(getenv('SSH_HOST')) // Hostname or IP address
@@ -66,7 +59,6 @@ task('deploy', [
     'deploy:shared',
     'deploy:vendors',
     'deploy:writable',
-    'artisan:config:cache', // | Laravel specific steps
     'artisan:optimize',     // |
     'artisan:migrate',      // |
     'deploy:symlink',
