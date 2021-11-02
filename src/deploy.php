@@ -44,7 +44,8 @@ host('pos.timexstudio.com') // Name of the server
     ->port(getenv('SSH_PORT')) // SSH port
     ->stage('production') // Deployment stage (production, staging, etc)
     ->user(getenv('SSH_USER')) // SSH user
-    ->set('deploy_path', getenv('DEPLOY_PATH')); // Deploy path
+    ->set('deploy_path', getenv('DEPLOY_PATH')) // Deploy path
+    ->set('http_user', 'nginx');
 
 // Tasks
 
