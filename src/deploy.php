@@ -66,8 +66,6 @@ task('deploy', [
     'deploy:shared',
     'deploy:vendors',
     'deploy:writable',
-    'artisan:storage:link', // |
-    'artisan:view:cache',   // |
     'artisan:config:cache', // | Laravel specific steps
     'artisan:optimize',     // |
     'artisan:migrate',      // |
