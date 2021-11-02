@@ -10,7 +10,7 @@ jobs:
       run:
         working-directory: ./src
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -25,10 +25,32 @@ jobs:
           php artisan jwt:secret
       - name: Test with PHPUnit
         run: vendor/bin/phpunit
-  # deploy:
-  #   name: Deploy to Production
-  #   runs-on: ubuntu-latest
-  #   needs: [test-php]
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #     # kode dimana logic deploy ke server
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: test-php
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.0
+        extension-csv: mbstring, bcmath
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+    - name: Install Composer dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+    - name: Get Deployer version
+      run: vendor/bin/dep -V
+    - name: Deploy to Production
+      run: vendor/bin/dep deploy production --tag=${{ env.GITHUB_REF }} -vvv
+      env:
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        SSH_PORT: ${{ secrets.SSH_PORT }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        DOT_ENV: ${{ secrets.DOT_ENV }}

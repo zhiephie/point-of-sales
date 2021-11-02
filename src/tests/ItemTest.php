@@ -216,7 +216,9 @@ class ItemTest extends TestCase
     {
         // Given
         // When
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'role' => 'admin'
+        ]);
 
         $this->actingAs($user)->json('DELETE', '/api/items/999');
         // Then
