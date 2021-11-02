@@ -143,8 +143,6 @@ class TableTest extends TestCase
                 'id' => $table->id,
                 'name' => $newTable['name'],
                 'slug' => $newTable['slug'],
-                'created_at' => (string) $table->created_at,
-                'updated_at' => (string)$table->updated_at,
             ]
         );
     }

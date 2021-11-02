@@ -134,8 +134,6 @@ class CategoryTest extends TestCase
                 'id' => $category->id,
                 'name' => $newCategory['name'],
                 'slug' => $newCategory['slug'],
-                'created_at' => (string) $category->created_at,
-                'updated_at' => (string) $category->updated_at,
             ]
         );
     }
