@@ -28,6 +28,9 @@ jobs:
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
     needs: test-php
     if: github.ref == 'refs/heads/main'
     steps:
